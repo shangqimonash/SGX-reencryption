@@ -1,0 +1,10 @@
+enclave {
+	trusted {
+		public void ecall_register_user([in, size=name_len] char* name, size_t name_len, [in, size=K_len] unsigned char* K, size_t K_len);
+		public void ecall_send_message([in, size=cipher_len] unsigned char* ciphertext, size_t cipher_len, [in, size=uname_len] char* user_name, size_t uname_len, [in, size=pname_len] char* peer_name, size_t pname_len);
+	};
+	
+	untrusted {
+		void ocall_print_string([in, string] const char *str);
+	};
+};
