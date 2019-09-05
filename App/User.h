@@ -28,6 +28,7 @@ public:
 	unsigned char* get_key();
 	void set_peer(char* peer_name);
 	void send_to_peer(sgx_enclave_id_t eid, char* message);
+	void receive_message(rand_t* message);
 private:
 	string name;
 	unsigned char key[ENC_KEY_SIZE];

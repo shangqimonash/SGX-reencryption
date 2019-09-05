@@ -13,6 +13,7 @@
  */
 
 #include <iostream>
+#include <unordered_map>
 
 #include "User.h"
 
@@ -20,8 +21,15 @@ using namespace std;
 
 #define ENCLAVE_FILE "Enclave.signed.so"
 
+unordered_map<string, User*> user_list;
+
 void ocall_print_string(const char *str) {
     printf("%s\n", str);
+}
+
+void ocall_send_to_peer(char* peer_name, size_t pname_len, void* msg, size_t msg_len) {
+	string peer = string(peer_name, pname_len);
+	user_list[peer]->receive_message((rand_t*) msg);
 }
 
 int main() {
@@ -45,7 +53,10 @@ int main() {
 	User *Bob = new User("Bob");
 	ecall_register_user(eid, (char *) Bob->get_name().c_str(), Bob->get_name().size(), Bob->get_key(), ENC_KEY_SIZE);
 
-	/* Set Bob as the communication peer of Alice */
+	/* Register user and peer */
+	user_list[Alice->get_name()] = Alice;
+	user_list[Bob->get_name()] = Bob;
+
 	Alice->set_peer("Bob");
 
 	/* Send a test message */
