@@ -23,10 +23,6 @@ using namespace std;
 
 unordered_map<string, User*> user_list;
 
-void ocall_print_string(const char *str) {
-    printf("%s\n", str);
-}
-
 void ocall_send_to_peer(char* peer_name, size_t pname_len, void* msg, size_t msg_len) {
 	string peer = string(peer_name, pname_len);
 	user_list[peer]->receive_message((rand_t*) msg);

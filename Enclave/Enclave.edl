@@ -5,7 +5,6 @@ enclave {
 	};
 	
 	untrusted {
-		void ocall_print_string([in, string] const char *str);
 		void ocall_send_to_peer([in, size=pname_len] char* peer_name, size_t pname_len, [in, size=msg_len] void* msg, size_t msg_len);
 	};
 };
